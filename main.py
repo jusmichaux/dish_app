@@ -260,7 +260,6 @@ def main(page: ft.Page):
         height=40,
         bgcolor="#764ba2",
         border_radius=20,
-        alignment=ft.alignment.center,
         on_click=lambda _: search_dish(),
         ink=True
     )
