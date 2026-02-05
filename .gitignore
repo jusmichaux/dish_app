@@ -4,7 +4,12 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
+
+# Build folders - BUT allow build/web/ for GitHub Pages
+build/*
+!build/web/
+!build/web/**
+
 develop-eggs/
 dist/
 downloads/
@@ -39,3 +44,6 @@ Thumbs.db
 
 # Flet
 .flet/
+
+# Protect source code - don't publish Python files
+*.py
