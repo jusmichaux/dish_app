@@ -43,18 +43,24 @@ def main(page: ft.Page):
         text_align=ft.TextAlign.CENTER
     )
     
-    # Grille d'images de résultats
-    results_grid = ft.GridView(
-        expand=False,
-        runs_count=2,
-        max_extent=150,
-        child_aspect_ratio=1.0,
-        spacing=15,
-        run_spacing=15,
+    # Image principale affichée
+    main_image = ft.Image(
+        src="",
+        width=300,
+        height=300,
+        fit=ft.ImageFit.CONTAIN,
+        border_radius=15,
         visible=False
     )
     
-    loading_indicator = ft.ProgressRing(visible=False, color=ft.colors.WHITE)
+    dish_name_display = ft.Text(
+        "",
+        size=24,
+        weight=ft.FontWeight.W_600,
+        color=ft.colors.WHITE,
+        text_align=ft.TextAlign.CENTER,
+        visible=False
+    )
     
     error_txt = ft.Text(
         color=ft.colors.RED_400,
@@ -72,25 +78,14 @@ def main(page: ft.Page):
         elevation=5,
         visible=False
     )
-    
-    results_card = ft.Card(
-        content=ft.Container(
-            content=ft.Column([
-                ft.Text("Résultats", size=20, weight=ft.FontWeight.W_600, color=ft.colors.with_opacity(0.8, ft.colors.BLACK)),
-                loading_indicator,
-                results_grid
-            ], spacing=15),
-            padding=20,
-            border_radius=20,
-        ),
-        elevation=5,
-        visible=False
-    )
 
     def show_error(message):
         error_txt.value = message
         error_txt.visible = True
+        main_image.visible = False
+        dish_name_display.visible = False
         page.update()
+        
         # Auto-hide après 3 secondes
         import threading
         def hide():
@@ -100,12 +95,12 @@ def main(page: ft.Page):
             page.update()
         threading.Thread(target=hide, daemon=True).start()
 
-    def add_to_history(dish_name):
+    def add_to_history(dish_code):
         # Retirer si déjà présent
-        if dish_name in history_list:
-            history_list.remove(dish_name)
+        if dish_code in history_list:
+            history_list.remove(dish_code)
         # Ajouter au début
-        history_list.insert(0, dish_name)
+        history_list.insert(0, dish_code)
         # Garder seulement les 5 derniers
         while len(history_list) > 5:
             history_list.pop()
@@ -131,22 +126,23 @@ def main(page: ft.Page):
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
             history_column.controls.append(header)
             
-            # Liste d'historique
+            # Liste d'historique avec miniatures
             for item in history_list:
                 history_item = ft.Container(
                     content=ft.Row([
-                        ft.Container(
-                            width=8,
-                            height=8,
-                            bgcolor="#667eea",
-                            border_radius=4
+                        ft.Image(
+                            src=f"{item}.png",
+                            width=50,
+                            height=50,
+                            fit=ft.ImageFit.COVER,
+                            border_radius=8
                         ),
-                        ft.Text(item, size=15, weight=ft.FontWeight.W_500)
-                    ], spacing=10),
-                    padding=10,
-                    bgcolor=ft.colors.with_opacity(0.05, ft.colors.BLACK),
+                        ft.Text(item, size=18, weight=ft.FontWeight.W_600),
+                    ], spacing=15),
+                    padding=12,
+                    bgcolor=ft.colors.with_opacity(0.1, ft.colors.WHITE),
                     border_radius=12,
-                    on_click=lambda e, name=item: page.run_task(search_dish, name),
+                    on_click=lambda e, code=item: search_dish(code),
                     ink=True
                 )
                 history_column.controls.append(history_item)
@@ -157,92 +153,48 @@ def main(page: ft.Page):
         
         page.update()
 
-    async def search_dish(dish_name=None):
-        query = dish_name if dish_name else txt_input.value.strip()
-        if not query:
-            show_error("Veuillez entrer un nom de plat")
+    def search_dish(dish_code=None):
+        # Récupérer le code depuis l'input ou le paramètre
+        code = dish_code if dish_code else txt_input.value.strip()
+        
+        if not code:
+            show_error("Veuillez entrer un code de plat")
             return
         
-        # Afficher le chargement
-        results_card.visible = True
-        loading_indicator.visible = True
-        results_grid.visible = False
-        results_grid.controls.clear()
-        page.update()
+        # Convertir en majuscules pour uniformiser
+        code = code.upper()
         
-        try:
-            # Recherche via API
-            import httpx
-            
-            url = f"https://www.themealdb.com/api/json/v1/1/search.php?s={query}"
-            
-            async with httpx.AsyncClient() as client:
-                response = await client.get(url)
-                data = response.json()
-            
-            loading_indicator.visible = False
-            
-            if data.get("meals"):
-                meals = data["meals"]
-                add_to_history(query)
-                
-                # Créer les cartes d'images
-                for meal in meals:
-                    result_item = ft.Container(
-                        content=ft.Column([
-                            ft.Image(
-                                src=meal["strMealThumb"],
-                                width=150,
-                                height=150,
-                                fit=ft.ImageFit.COVER,
-                                border_radius=15
-                            ),
-                            ft.Container(
-                                content=ft.Text(
-                                    meal["strMeal"],
-                                    size=13,
-                                    weight=ft.FontWeight.W_500,
-                                    text_align=ft.TextAlign.CENTER,
-                                    max_lines=2,
-                                    overflow=ft.TextOverflow.ELLIPSIS
-                                ),
-                                padding=10
-                            )
-                        ], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
-                        bgcolor=ft.colors.WHITE,
-                        border_radius=15,
-                        shadow=ft.BoxShadow(
-                            spread_radius=1,
-                            blur_radius=10,
-                            color=ft.colors.with_opacity(0.1, ft.colors.BLACK),
-                            offset=ft.Offset(0, 5)
-                        ),
-                        ink=True
-                    )
-                    results_grid.controls.append(result_item)
-                
-                results_grid.visible = True
-                
-                if not dish_name:
-                    txt_input.value = ""
-            else:
-                show_error("Aucun plat trouvé. Essayez une autre recherche.")
-            
-            page.update()
-            
-        except Exception as e:
-            loading_indicator.visible = False
-            show_error(f"Erreur de connexion: {str(e)}")
-            page.update()
+        # Construire le chemin de l'image
+        # Flet cherchera automatiquement dans assets_dir
+        image_path = f"{code}.png"
+        
+        # Afficher l'image
+        main_image.src = image_path
+        main_image.visible = True
+        dish_name_display.value = f"Plat {code}"
+        dish_name_display.visible = True
+        error_txt.visible = False
+        
+        # Ajouter à l'historique
+        add_to_history(code)
+        
+        # Vider l'input si c'est une nouvelle recherche
+        if not dish_code:
+            txt_input.value = ""
+        
+        page.update()
 
     def clear_all(e):
         history_list.clear()
         save_history()
         render_history()
+        main_image.visible = False
+        dish_name_display.visible = False
+        page.update()
 
     txt_input = ft.TextField(
-        label="Rechercher un plat...",
-        on_submit=lambda e: page.run_task(search_dish),
+        label="Code du plat (ex: 1A, 2B...)",
+        on_submit=lambda e: search_dish(),
         width=300,
         border_radius=50,
         filled=True,
@@ -251,7 +203,9 @@ def main(page: ft.Page):
         focused_border_color=ft.colors.TRANSPARENT,
         text_size=16,
         height=55,
-        content_padding=ft.padding.symmetric(horizontal=20, vertical=15)
+        content_padding=ft.padding.symmetric(horizontal=20, vertical=15),
+        text_align=ft.TextAlign.CENTER,
+        autofocus=True
     )
 
     search_btn = ft.Container(
@@ -260,7 +214,7 @@ def main(page: ft.Page):
         height=40,
         bgcolor="#764ba2",
         border_radius=20,
-        on_click=lambda e: page.run_task(search_dish),
+        on_click=lambda e: search_dish(),
         ink=True
     )
 
@@ -283,9 +237,11 @@ def main(page: ft.Page):
             ft.Container(height=20),
             error_txt,
             ft.Container(height=20),
+            dish_name_display,
+            ft.Container(height=10),
+            main_image,
+            ft.Container(height=30),
             history_card,
-            ft.Container(height=20),
-            results_card,
             ft.Container(height=40),
         ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0)
     )
