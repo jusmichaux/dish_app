@@ -7,7 +7,7 @@ def main(page: ft.Page):
     page.padding = 20
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.scroll = ft.ScrollMode.AUTO
-    page.bgcolor = ft.Colors.with_opacity(0.95, "#667eea")
+    page.bgcolor = ft.colors.with_opacity(0.95, "#667eea")
     
     # Configuration pour mobile
     page.window_width = 400
@@ -39,7 +39,7 @@ def main(page: ft.Page):
         "🍽️ Recherche de Plats",
         size=32,
         weight=ft.FontWeight.W_600,
-        color=ft.Colors.WHITE,
+        color=ft.colors.WHITE,
         text_align=ft.TextAlign.CENTER
     )
     
@@ -54,10 +54,10 @@ def main(page: ft.Page):
         visible=False
     )
     
-    loading_indicator = ft.ProgressRing(visible=False, color=ft.Colors.WHITE)
+    loading_indicator = ft.ProgressRing(visible=False, color=ft.colors.WHITE)
     
     error_txt = ft.Text(
-        color=ft.Colors.RED_400,
+        color=ft.colors.RED_400,
         weight=ft.FontWeight.BOLD,
         text_align=ft.TextAlign.CENTER,
         visible=False
@@ -76,7 +76,7 @@ def main(page: ft.Page):
     results_card = ft.Card(
         content=ft.Container(
             content=ft.Column([
-                ft.Text("Résultats", size=20, weight=ft.FontWeight.W_600, color=ft.Colors.with_opacity(0.8, ft.Colors.BLACK)),
+                ft.Text("Résultats", size=20, weight=ft.FontWeight.W_600, color=ft.colors.with_opacity(0.8, ft.colors.BLACK)),
                 loading_indicator,
                 results_grid
             ], spacing=15),
@@ -124,8 +124,8 @@ def main(page: ft.Page):
                     "Effacer",
                     icon=ft.Icons.DELETE_SWEEP,
                     on_click=clear_all,
-                    bgcolor=ft.Colors.RED_400,
-                    color=ft.Colors.WHITE,
+                    bgcolor=ft.colors.RED_400,
+                    color=ft.colors.WHITE,
                     height=35
                 )
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
@@ -144,7 +144,7 @@ def main(page: ft.Page):
                         ft.Text(item, size=15, weight=ft.FontWeight.W_500)
                     ], spacing=10),
                     padding=10,
-                    bgcolor=ft.Colors.with_opacity(0.05, ft.Colors.BLACK),
+                    bgcolor=ft.colors.with_opacity(0.05, ft.colors.BLACK),
                     border_radius=12,
                     on_click=lambda e, name=item: search_dish(name),
                     ink=True
@@ -209,12 +209,12 @@ def main(page: ft.Page):
                                 padding=10
                             )
                         ], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
-                        bgcolor=ft.Colors.WHITE,
+                        bgcolor=ft.colors.WHITE,
                         border_radius=15,
                         shadow=ft.BoxShadow(
                             spread_radius=1,
                             blur_radius=10,
-                            color=ft.Colors.with_opacity(0.1, ft.Colors.BLACK),
+                            color=ft.colors.with_opacity(0.1, ft.colors.BLACK),
                             offset=ft.Offset(0, 5)
                         ),
                         ink=True
@@ -246,16 +246,16 @@ def main(page: ft.Page):
         width=300,
         border_radius=50,
         filled=True,
-        bgcolor=ft.Colors.WHITE,
-        border_color=ft.Colors.TRANSPARENT,
-        focused_border_color=ft.Colors.TRANSPARENT,
+        bgcolor=ft.colors.WHITE,
+        border_color=ft.colors.TRANSPARENT,
+        focused_border_color=ft.colors.TRANSPARENT,
         text_size=16,
         height=55,
         content_padding=ft.padding.symmetric(horizontal=20, vertical=15)
     )
 
     search_btn = ft.Container(
-        content=ft.Icon(ft.Icons.SEARCH, color=ft.Colors.WHITE, size=20),
+        content=ft.Icon(ft.Icons.SEARCH, color=ft.colors.WHITE, size=20),
         width=40,
         height=40,
         bgcolor="#764ba2",
