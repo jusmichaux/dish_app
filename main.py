@@ -122,7 +122,7 @@ def main(page: ft.Page):
                 ft.Text("Historique", size=20, weight=ft.FontWeight.W_600),
                 ft.ElevatedButton(
                     "Effacer",
-                    icon=ft.Icons.DELETE_SWEEP,
+                    icon=ft.icons.DELETE_SWEEP,
                     on_click=clear_all,
                     bgcolor=ft.colors.RED_400,
                     color=ft.colors.WHITE,
@@ -146,7 +146,7 @@ def main(page: ft.Page):
                     padding=10,
                     bgcolor=ft.colors.with_opacity(0.05, ft.colors.BLACK),
                     border_radius=12,
-                    on_click=lambda e, name=item: search_dish(name),
+                    on_click=lambda e, name=item: page.run_task(search_dish, name),
                     ink=True
                 )
                 history_column.controls.append(history_item)
@@ -242,7 +242,7 @@ def main(page: ft.Page):
 
     txt_input = ft.TextField(
         label="Rechercher un plat...",
-        on_submit=lambda _: search_dish(),
+        on_submit=lambda e: page.run_task(search_dish),
         width=300,
         border_radius=50,
         filled=True,
@@ -255,12 +255,12 @@ def main(page: ft.Page):
     )
 
     search_btn = ft.Container(
-        content=ft.Icon(ft.Icons.SEARCH, color=ft.colors.WHITE, size=20),
+        content=ft.Icon(ft.icons.SEARCH, color=ft.colors.WHITE, size=20),
         width=40,
         height=40,
         bgcolor="#764ba2",
         border_radius=20,
-        on_click=lambda _: search_dish(),
+        on_click=lambda e: page.run_task(search_dish),
         ink=True
     )
 
