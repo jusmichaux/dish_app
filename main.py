@@ -172,13 +172,13 @@ def main(page: ft.Page):
         
         try:
             # Recherche via API
-            import urllib.request
-            import json
+            import httpx
             
-            url = f"https://www.themealdb.com/api/json/v1/1/search.php?s={urllib.parse.quote(query)}"
+            url = f"https://www.themealdb.com/api/json/v1/1/search.php?s={query}"
             
-            with urllib.request.urlopen(url) as response:
-                data = json.loads(response.read().decode())
+            async with httpx.AsyncClient() as client:
+                response = await client.get(url)
+                data = response.json()
             
             loading_indicator.visible = False
             
