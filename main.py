@@ -55,7 +55,7 @@ def main(page: ft.Page):
                 color=ft.colors.with_opacity(0.7, ft.colors.WHITE),
                 weight=ft.FontWeight.W_500
             )
-        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=10),
+        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, vertical_alignement=ft.CrossAxisAlignment.CENTER, spacing=10),
         width=300,
         height=300,
         border_radius=15,
