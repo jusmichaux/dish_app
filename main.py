@@ -55,12 +55,13 @@ def main(page: ft.Page):
                 color=ft.colors.with_opacity(0.7, ft.colors.WHITE),
                 weight=ft.FontWeight.W_500
             )
-        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, vertical_alignement=ft.CrossAxisAlignment.CENTER, spacing=10),
+        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, 
+           alignment=ft.MainAxisAlignment.CENTER,
+           spacing=10),
         width=300,
         height=300,
         border_radius=15,
-        bgcolor=ft.colors.with_opacity(0.1, ft.colors.WHITE),
-        padding=40
+        bgcolor=ft.colors.with_opacity(0.1, ft.colors.WHITE)
     )
     
     main_image = ft.Image(
@@ -223,7 +224,7 @@ def main(page: ft.Page):
         focused_border_color="#764ba2",
         focused_border_width=2,
         text_size=18,
-        height=80,
+        height=60,
         content_padding=ft.padding.only(left=20, right=60, top=10, bottom=10),
         text_align=ft.TextAlign.LEFT,
         autofocus=True,
