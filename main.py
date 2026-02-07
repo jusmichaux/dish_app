@@ -134,7 +134,7 @@ def main(page: ft.Page):
         if history_list:
             # En-tête
             header = ft.Row([
-                ft.Text("Historique", size=20, weight=ft.FontWeight.W_600),
+                ft.Text("Historique de recherche", size=20, weight=ft.FontWeight.W_600),
                 ft.ElevatedButton(
                     "Effacer",
                     icon=ft.icons.DELETE_SWEEP,
@@ -223,7 +223,7 @@ def main(page: ft.Page):
         focused_border_color="#764ba2",
         focused_border_width=2,
         text_size=18,
-        height=60,
+        height=80,
         content_padding=ft.padding.only(left=20, right=60, top=10, bottom=10),
         text_align=ft.TextAlign.LEFT,
         autofocus=True,
