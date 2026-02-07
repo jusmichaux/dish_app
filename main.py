@@ -44,13 +44,33 @@ def main(page: ft.Page):
     )
     
     # Image principale affichée
+    
+    # Placeholder quand l'image n'existe pas
+    image_placeholder = ft.Container(
+        content=ft.Column([
+            ft.Icon(ft.icons.RESTAURANT, size=80, color=ft.colors.with_opacity(0.3, ft.colors.WHITE)),
+            ft.Text(
+                "Image introuvable",
+                size=18,
+                color=ft.colors.with_opacity(0.7, ft.colors.WHITE),
+                weight=ft.FontWeight.W_500
+            )
+        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=10),
+        width=300,
+        height=300,
+        border_radius=15,
+        bgcolor=ft.colors.with_opacity(0.1, ft.colors.WHITE),
+        padding=40
+    )
+    
     main_image = ft.Image(
         src="",
         width=300,
         height=300,
         fit=ft.ImageFit.CONTAIN,
         border_radius=15,
-        visible=False
+        visible=False,
+        error_content=image_placeholder
     )
     
     dish_name_display = ft.Text(
@@ -168,7 +188,7 @@ def main(page: ft.Page):
         # Flet cherchera automatiquement dans assets_dir
         image_path = f"{code}.png"
         
-        # Afficher l'image
+        # Afficher l'image (si elle n'existe pas, error_content s'affichera)
         main_image.src = image_path
         main_image.visible = True
         dish_name_display.value = f"Plat {code}"
