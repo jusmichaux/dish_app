@@ -213,27 +213,29 @@ def main(page: ft.Page):
         page.update()
 
     txt_input = ft.TextField(
-        label="Code du plat (ex: 1A, 2B...)",
+        hint_text="Code du plat (ex: 1A, 2B...)",
         on_submit=lambda e: search_dish(),
         width=300,
         border_radius=50,
         filled=True,
         bgcolor=ft.colors.WHITE,
         border_color=ft.colors.TRANSPARENT,
-        focused_border_color=ft.colors.TRANSPARENT,
-        text_size=16,
-        height=55,
-        content_padding=ft.padding.symmetric(horizontal=20, vertical=15),
-        text_align=ft.TextAlign.CENTER,
-        autofocus=True
+        focused_border_color="#764ba2",
+        focused_border_width=2,
+        text_size=18,
+        height=60,
+        content_padding=ft.padding.only(left=20, right=60, top=10, bottom=10),
+        text_align=ft.TextAlign.LEFT,
+        autofocus=True,
+        cursor_color="#764ba2"
     )
 
     search_btn = ft.Container(
-        content=ft.Icon(ft.icons.SEARCH, color=ft.colors.WHITE, size=20),
-        width=40,
-        height=40,
+        content=ft.Icon(ft.icons.SEARCH, color=ft.colors.WHITE, size=22),
+        width=44,
+        height=44,
         bgcolor="#764ba2",
-        border_radius=20,
+        border_radius=22,
         on_click=lambda e: search_dish(),
         ink=True
     )
@@ -245,7 +247,7 @@ def main(page: ft.Page):
             right=8,
             top=8
         )
-    ], width=300, height=55)
+    ], width=300, height=60)
 
     # --- MISE EN PAGE ---
     page.add(
