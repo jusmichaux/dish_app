@@ -327,7 +327,7 @@ def main(page: ft.Page):
                 top=10,
                 bottom=10
             )
-        ], width=320, height=100),
+        ], width=320, height=250),
         shadow=ft.BoxShadow(
             spread_radius=0,
             blur_radius=25,
