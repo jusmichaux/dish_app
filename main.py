@@ -99,7 +99,7 @@ def main(page: ft.Page):
         border=ft.border.all(2, ft.colors.with_opacity(0.1, "#667eea"))
     )
     
-    # Image principale avec ombre
+    # Image principale sans ombre (fond blanc pur)
     main_image = ft.Container(
         content=ft.Image(
             src="",
@@ -108,12 +108,6 @@ def main(page: ft.Page):
             fit=ft.ImageFit.CONTAIN,
             border_radius=20,
             error_content=image_placeholder
-        ),
-        shadow=ft.BoxShadow(
-            spread_radius=0,
-            blur_radius=30,
-            color=ft.colors.with_opacity(0.12, ft.colors.BLACK),
-            offset=ft.Offset(0, 10)
         ),
         visible=False
     )
@@ -182,6 +176,7 @@ def main(page: ft.Page):
     history_card = ft.Container(
         content=ft.Column(spacing=12),
         padding=20,
+        width=320,
         bgcolor=ft.colors.WHITE,
         border_radius=25,
         shadow=ft.BoxShadow(
@@ -334,15 +329,15 @@ def main(page: ft.Page):
 
     # Bouton de recherche moderne
     search_btn = ft.Container(
-        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=24),
-        width=48,
-        height=48,
+        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=22),
+        width=46,
+        height=46,
         gradient=ft.LinearGradient(
             begin=ft.alignment.top_left,
             end=ft.alignment.bottom_right,
             colors=["#667eea", "#764ba2"]
         ),
-        border_radius=24,
+        border_radius=23,
         on_click=lambda e: search_dish(),
         ink=True,
         shadow=ft.BoxShadow(
@@ -359,8 +354,8 @@ def main(page: ft.Page):
             txt_input,
             ft.Container(
                 content=search_btn,
-                right=6,
-                top=6
+                right=7,
+                top=7
             )
         ], width=320, height=60),
         shadow=ft.BoxShadow(
@@ -385,11 +380,7 @@ def main(page: ft.Page):
             ft.Container(height=15),
             main_image,
             ft.Container(height=35),
-            ft.Container(
-                content=history_card,
-                width=360,
-                padding=ft.padding.symmetric(horizontal=20)
-            ),
+            history_card,
             ft.Container(height=40),
         ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0)
     )
