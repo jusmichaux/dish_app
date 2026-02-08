@@ -298,7 +298,7 @@ def main(page: ft.Page):
 
     # Bouton de recherche moderne - plus petit
     search_btn = ft.Container(
-        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=10),
+        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=25),
         width=50,
         height=80,
         gradient=ft.LinearGradient(
@@ -327,7 +327,7 @@ def main(page: ft.Page):
                 top=10,
                 bottom=10
             )
-        ], width=320, height=250),
+        ], width=320, height=30),
         shadow=ft.BoxShadow(
             spread_radius=0,
             blur_radius=25,
