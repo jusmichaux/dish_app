@@ -298,9 +298,9 @@ def main(page: ft.Page):
 
     # Bouton de recherche moderne - plus petit
     search_btn = ft.Container(
-        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=20),
-        width=25,
-        height=25,
+        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=10),
+        width=50,
+        height=50,
         gradient=ft.LinearGradient(
             begin=ft.alignment.top_left,
             end=ft.alignment.bottom_right,
