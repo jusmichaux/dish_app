@@ -311,7 +311,7 @@ def main(page: ft.Page):
         ink=True,
         shadow=ft.BoxShadow(
             spread_radius=0,
-            blur_radius=15,
+            blur_radius=25,
             color=ft.colors.with_opacity(0.3, "#667eea"),
             offset=ft.Offset(0, 5)
         )
@@ -327,7 +327,7 @@ def main(page: ft.Page):
                 top=10,
                 bottom=10
             )
-        ], width=320, height=70),
+        ], width=320, height=100),
         shadow=ft.BoxShadow(
             spread_radius=0,
             blur_radius=25,
