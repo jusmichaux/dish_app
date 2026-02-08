@@ -194,74 +194,43 @@ def main(page: ft.Page):
         history_column.controls.clear()
         
         if history_list:
-            # En-tête moderne
+            # En-tête
             header_row = ft.Row([
-                ft.Row([
-                    ft.Icon(ft.icons.HISTORY, color="#667eea", size=22),
-                    ft.Text(
-                        "Historique", 
-                        size=18, 
-                        weight=ft.FontWeight.BOLD,
-                        color="#2D3748"
-                    )
-                ], spacing=8),
+                ft.Text("Historique", size=18, weight=ft.FontWeight.BOLD, color="#2D3748"),
                 ft.Container(
                     content=ft.Row([
-                        ft.Icon(ft.icons.DELETE_SWEEP, color=ft.colors.WHITE, size=18),
-                        ft.Text("Effacer", color=ft.colors.WHITE, size=13, weight=ft.FontWeight.W_500)
-                    ], spacing=5),
+                        ft.Icon(ft.icons.DELETE_SWEEP, color=ft.colors.WHITE, size=16),
+                        ft.Text("Effacer", color=ft.colors.WHITE, size=12, weight=ft.FontWeight.W_500)
+                    ], spacing=5, tight=True),
                     bgcolor=ft.colors.RED_400,
                     border_radius=20,
-                    padding=ft.padding.symmetric(horizontal=12, vertical=8),
+                    padding=ft.padding.symmetric(horizontal=10, vertical=6),
                     on_click=clear_all,
                     ink=True
                 )
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
             history_column.controls.append(header_row)
             
-            history_column.controls.append(ft.Container(height=5))
+            history_column.controls.append(ft.Container(height=10))
             
-            # Liste d'historique moderne
+            # Liste d'historique simple
             for item in history_list:
                 history_item = ft.Container(
                     content=ft.Row([
-                        ft.Container(
-                            content=ft.Image(
-                                src=f"{item}.png",
-                                width=55,
-                                height=55,
-                                fit=ft.ImageFit.COVER,
-                                border_radius=12
-                            ),
-                            shadow=ft.BoxShadow(
-                                spread_radius=0,
-                                blur_radius=8,
-                                color=ft.colors.with_opacity(0.1, ft.colors.BLACK),
-                                offset=ft.Offset(0, 2)
-                            )
+                        ft.Image(
+                            src=f"{item}.png",
+                            width=50,
+                            height=50,
+                            fit=ft.ImageFit.COVER,
+                            border_radius=8
                         ),
-                        ft.Column([
-                            ft.Text(
-                                f"Plat {item}", 
-                                size=16, 
-                                weight=ft.FontWeight.BOLD,
-                                color="#2D3748"
-                            ),
-                            ft.Text(
-                                "Cliquer pour afficher", 
-                                size=12, 
-                                color=ft.colors.with_opacity(0.5, ft.colors.BLACK)
-                            )
-                        ], spacing=2),
-                        ft.Icon(ft.icons.CHEVRON_RIGHT, color="#667eea", size=20)
-                    ], spacing=15, alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
-                    padding=12,
-                    bgcolor=ft.colors.with_opacity(0.03, "#667eea"),
-                    border_radius=15,
-                    border=ft.border.all(1, ft.colors.with_opacity(0.1, "#667eea")),
+                        ft.Text(item, size=16, weight=ft.FontWeight.W_600, color="#2D3748"),
+                    ], spacing=12, tight=True),
+                    padding=10,
+                    bgcolor=ft.colors.with_opacity(0.05, "#667eea"),
+                    border_radius=12,
                     on_click=lambda e, code=item: search_dish(code),
-                    ink=True,
-                    animate=ft.animation.Animation(300, "easeOut")
+                    ink=True
                 )
                 history_column.controls.append(history_item)
             
@@ -312,32 +281,32 @@ def main(page: ft.Page):
         ),
         on_submit=lambda e: search_dish(),
         width=320,
-        border_radius=25,
+        border_radius=30,
         filled=True,
         bgcolor=ft.colors.WHITE,
         border_color=ft.colors.with_opacity(0.1, ft.colors.BLACK),
         focused_border_color="#667eea",
         focused_border_width=2,
         text_size=18,
-        height=60,
-        content_padding=ft.padding.only(left=25, right=70, top=10, bottom=10),
+        height=70,
+        content_padding=ft.padding.only(left=25, right=75, top=15, bottom=15),
         text_align=ft.TextAlign.LEFT,
         autofocus=True,
         cursor_color="#667eea",
         color="#2D3748"
     )
 
-    # Bouton de recherche moderne
+    # Bouton de recherche moderne - plus petit
     search_btn = ft.Container(
-        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=22),
-        width=46,
-        height=46,
+        content=ft.Icon(ft.icons.SEARCH_ROUNDED, color=ft.colors.WHITE, size=20),
+        width=50,
+        height=50,
         gradient=ft.LinearGradient(
             begin=ft.alignment.top_left,
             end=ft.alignment.bottom_right,
             colors=["#667eea", "#764ba2"]
         ),
-        border_radius=23,
+        border_radius=25,
         on_click=lambda e: search_dish(),
         ink=True,
         shadow=ft.BoxShadow(
@@ -354,17 +323,17 @@ def main(page: ft.Page):
             txt_input,
             ft.Container(
                 content=search_btn,
-                right=7,
-                top=7
+                right=10,
+                top=10
             )
-        ], width=320, height=60),
+        ], width=320, height=70),
         shadow=ft.BoxShadow(
             spread_radius=0,
             blur_radius=25,
             color=ft.colors.with_opacity(0.08, ft.colors.BLACK),
             offset=ft.Offset(0, 8)
         ),
-        border_radius=25
+        border_radius=30
     )
 
     # --- MISE EN PAGE ---
