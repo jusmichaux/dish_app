@@ -324,7 +324,8 @@ def main(page: ft.Page):
             ft.Container(
                 content=search_btn,
                 right=10,
-                top=10
+                top=10,
+                bottom=10
             )
         ], width=320, height=70),
         shadow=ft.BoxShadow(
